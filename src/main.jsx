@@ -18,7 +18,7 @@ const memories = [
 const photos = [
   // "/images/paiting.jpg",
   // "/images/mark_nha.jpg",
-  "/images/button.jpg",
+  "/images/button.JPG",
   // "/images/button_2.jpg",
   // "/images/couple_shoes.jpg",
   // "/images/flowers.jpg",
