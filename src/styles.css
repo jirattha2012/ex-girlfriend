@@ -370,3 +370,40 @@ em { font-style:normal; color:#b17878; }
   }
 }
 
+
+/* Confirm */
+.confirm-popup {
+  margin-top: 18px;
+  background: rgba(255,255,255,0.08);
+  border: 1px dashed rgba(255,255,255,0.3);
+  border-radius: 18px;
+  padding: 24px 20px;
+  text-align: center;
+  animation: rise 0.4s cubic-bezier(.2,.8,.2,1) both;
+}
+
+.confirm-popup svg {
+  color: #e6bfc0;
+  margin-bottom: 6px;
+}
+
+.confirm-title {
+  font-family: "Noto Serif Thai", serif;
+  font-size: 20px;
+  color: #fdf9f4 !important;
+  margin: 6px 0 4px !important;
+}
+
+.confirm-sub {
+  color: #d9ccc5 !important;
+  font-size: 13px !important;
+}
+
+.confirm-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+

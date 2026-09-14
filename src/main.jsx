@@ -108,7 +108,14 @@ function App() {
     setTimeout(() => setConfetti([]), 4200); // เคลียร์ทิ้งหลังเล่นจบ
   };
 
+  const [showConfirm, setShowConfirm] = useState(false);
+
   const handleTalkClick = () => {
+    setShowConfirm(true);
+  };
+
+  const confirmTalk = () => {
+    setShowConfirm(false);
     fireConfetti();
     chooseResponse("talk");
   };
@@ -175,6 +182,8 @@ function App() {
     }
   };
 
+
+  
 
 
   return (
@@ -333,6 +342,22 @@ function App() {
                     )}
 
                   </div>
+
+                  {showConfirm && (
+                    <div className="confirm-popup">
+                      <Heart size={22} fill="currentColor"/>
+                      <p className="confirm-title">แน่ใจนะ?</p>
+                      <p className="confirm-sub">กดแล้วจะไม่มีการกดยกเลิกทีหลังนะ 😳</p>
+                      <div className="confirm-buttons">
+                        <button className="primary" onClick={confirmTalk}>
+                          ใช่ แน่ใจแล้ว <Heart size={15}/>
+                        </button>
+                        <button className="maintenance-close" onClick={() => setShowConfirm(false)}>
+                          <X size={14}/> ขอคิดอีกที
+                        </button>
+                      </div>
+                    </div>
+                  )}
 
                   {showMaintenance && (
                     <div className="maintenance-popup">
