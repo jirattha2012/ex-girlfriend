@@ -63,7 +63,7 @@ function App() {
           <span className="rainbow-text">IG: j_r_tha</span>
         </span>
         
-        <span className="sig-quote">Khon Thai pen arai gap khon kao?</span>
+        <span className="sig-quote">Khon Thai pen arai gap khon kao?  ( ｡ •̀ ᴖ •́ ｡)</span>
       </div>
 
       {!started ? (
