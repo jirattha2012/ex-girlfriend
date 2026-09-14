@@ -74,9 +74,53 @@ function App() {
     }
   };
 
+  // function สำหรับจุดพลุ
+  const [confetti, setConfetti] = useState([]);
+
+  const fireConfetti = () => {
+    const colors = ["#e6bfc0", "#f7e5e3", "#d9ccc5", "#b17878", "#fdf9f4", "#8e5e60"];
+    const pieces = Array.from({ length: 60 }).map((_, i) => ({
+      id: `${Date.now()}-${i}`,
+      left: Math.random() * 100,           // % ตำแหน่งซ้าย-ขวา
+      delay: Math.random() * 0.3,          // ดีเลย์เริ่มไม่พร้อมกัน
+      duration: 2.5 + Math.random() * 1.5, // ความเร็วตกไม่เท่ากัน
+      color: colors[Math.floor(Math.random() * colors.length)],
+      rotate: Math.random() * 360,
+      drift: (Math.random() - 0.5) * 200,  // เบี่ยงซ้าย-ขวาตอนตก
+    }));
+    setConfetti(pieces);
+    setTimeout(() => setConfetti([]), 4200); // เคลียร์ทิ้งหลังเล่นจบ
+  };
+
+  const handleTalkClick = () => {
+    fireConfetti();
+    chooseResponse("talk");
+  };
+
+
 
   return (
     <div className="site">
+      {/* add matsuri */}
+      {confetti.length > 0 && (
+        <div className="confetti-layer">
+          {confetti.map(p => (
+            <span
+              key={p.id}
+              className="confetti-piece"
+              style={{
+                left: `${p.left}%`,
+                backgroundColor: p.color,
+                animationDelay: `${p.delay}s`,
+                animationDuration: `${p.duration}s`,
+                "--drift": `${p.drift}px`,
+                "--rotate": `${p.rotate}deg`,
+              }}
+            />
+          ))}
+        </div>
+      )}
+      
       <audio ref={audioRef} loop src="/midnight_sun.mp3" />
 
       <div className="grain" />
@@ -190,7 +234,10 @@ function App() {
                   <p className="question">แต่ถ้าเธออยากบอกอะไรกับเรา…</p>
                   <div className="response-buttons">
                     {/* <button className="primary" onClick={() => setShowMaintenance(true)}> */}
-                    <button className="primary" onClick={() => chooseResponse("talk")}>
+                    {/* <button className="primary" onClick={() => chooseResponse("talk")}>
+                      ลองคุยกันอีกครั้งนะ <Heart size={17}/>
+                    </button> */}
+                    <button className="primary" onClick={handleTalkClick}>
                       ลองคุยกันอีกครั้งนะ <Heart size={17}/>
                     </button>
                     
