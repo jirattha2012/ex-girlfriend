@@ -22,10 +22,10 @@ const photos = [
   "/images/a3.PNG",
   "/images/a4.PNG",
   "/images/a5.PNG",
-  "/images/a6.PNG",
-  "/images/a7.PNG",
-  "/images/a8.PNG",
   "/images/a9.PNG",
+  "/images/a8.PNG",
+  "/images/a7.PNG",
+  "/images/a6.PNG",
   "/images/a10.PNG",
   "/images/a11.PNG",
 
@@ -323,7 +323,6 @@ function App() {
                 <div className="response-area">
                   <p className="question">แต่ถ้าเธออยากบอกอะไรกับเรา…</p>
                   <div className="response-buttons">
-                    {/* <button className="primary" onClick={() => chooseResponse("talk")}> */}
                     {/* <button className="primary" onClick={() => setShowMaintenance(true)}> */}
                     <button className="primary" onClick={handleTalkClick}>
                       ลองคุยกันอีกครั้งนะ <Heart size={17}/>                    
