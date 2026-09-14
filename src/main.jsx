@@ -216,12 +216,6 @@ function App() {
         <span>{musicOn ? "กำลังเล่น" : "เปิดเพลง"}</span>
       </button>
 
-      {/* logo */}
-      <div className="floating-photo">
-        <img src="/images/zintear.JPG" alt="logo" />
-        {/* <img src="/images/kid.jpg" alt="logo" /> */}
-      </div>
-      
       {/* signatures */}
       <div className="signature">
         <span className="sig-ig">
@@ -231,6 +225,13 @@ function App() {
         
         <span className="sig-quote">Khon Thai pen arai gap khon kao?  ( ｡ •̀ ᴖ •́ ｡)</span>
       </div>
+
+      {/* logo */}
+      <div className="floating-photo">
+        <img src="/images/zintear.JPG" alt="logo" />
+        {/* <img src="/images/kid.jpg" alt="logo" /> */}
+      </div>
+      
 
       {!started ? (
         <section className="hero landing">
