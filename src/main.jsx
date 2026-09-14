@@ -26,6 +26,7 @@ const successPhotos = [
   "/images/nippy.jpg",
   "/images/rabbit.jpg",
   "/images/roblox.png",
+  "/images/sunset.jpg",
 ];
 
 const defaultPhotos = [
