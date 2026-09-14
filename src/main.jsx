@@ -15,7 +15,20 @@ const memories = [
   { date: "วันนี้", title: "เราไม่ได้ขอให้ทุกอย่างกลับไปเหมือนเดิม", text: "ถ้ามีโอกาส เราอยากค่อย ๆ รู้จักเธอใหม่ และพิสูจน์ด้วยการกระทำมากกว่าคำสัญญา" }
 ];
 
-const photos = [
+const successPhotos = [
+  "/images/paiting.jpg",
+  "/images/couple_shoes.jpg",
+  "/images/waiting_train.jpg",
+  "/images/hbd.jpg",
+  "/images/hbd2.jpg",
+  "/images/mc.jpg",
+  "/images/mc.png",
+  "/images/nippy.jpg",
+  "/images/rabbit.jpg",
+  "/images/roblox.png",
+];
+
+const defaultPhotos = [
   "/images/button.JPG",
   "/images/a1.PNG",
   "/images/a2.PNG",
@@ -28,14 +41,6 @@ const photos = [
   "/images/a6.PNG",
   "/images/a10.PNG",
   "/images/a11.PNG",
-
-  // "/images/paiting.jpg",
-  // "/images/couple_shoes.jpg",
-  // "/images/waiting_train.jpg",
-  // "/images/hbd.jpg",
-  // "/images/hbd2.jpg",
-  // "/images/mc.jpg",
-  // "/images/nippy.jpg",
 ];
 
 function App() {
@@ -44,6 +49,11 @@ function App() {
   const [response, setResponse] = useState(null);
   // const [photo, setPhoto] = useState(null);
   const [photoIndex, setPhotoIndex] = useState(0);
+  const [photoList, setPhotoList] = useState(
+    localStorage.getItem("isLoggedIn") === "true"
+      ? successPhotos
+      : defaultPhotos
+  );
   const audioRef = useRef(null);
 
   useEffect(() => {
@@ -54,8 +64,9 @@ function App() {
 
   const chooseResponse = (value) => setResponse(value);
 
-  const prevPhoto = () => setPhotoIndex(i => (i === 0 ? photos.length - 1 : i - 1));
-  const nextPhoto = () => setPhotoIndex(i => (i === photos.length - 1 ? 0 : i + 1));
+  const prevPhoto = () => setPhotoIndex(i => (i === 0 ? photoList.length - 1 : i - 1));
+
+  const nextPhoto = () => setPhotoIndex(i => (i === photoList.length - 1 ? 0 : i + 1));
 
   // false = ปิดปรับปรุงอยู่
   const [showMaintenance, setShowMaintenance] = useState(false); 
@@ -64,32 +75,6 @@ function App() {
   const MAX_DODGE = 9;
   const [dodgeCount, setDodgeCount] = useState(0);
   const [dodgeStyle, setDodgeStyle] = useState({});
-
-  // const handleTimeClick = (e) => {
-  //   if (dodgeCount < MAX_DODGE) {
-  //     const btnWidth = 200;
-  //     const btnHeight = 55;
-  //     const padding = 20;
-
-  //     const maxX = window.innerWidth - btnWidth - padding;
-  //     const maxY = window.innerHeight - btnHeight - padding;
-
-  //     const randomX = padding + Math.random() * maxX;
-  //     const randomY = padding + Math.random() * maxY;
-  //     const randomRotate = (Math.random() - 0.5) * 40;
-
-  //     setDodgeStyle({
-  //       position: "fixed",
-  //       left: `${randomX}px`,
-  //       top: `${randomY}px`,
-  //       transform: `rotate(${randomRotate}deg)`,
-  //     });
-  //     setDodgeCount(c => c + 1);
-  //   } else {
-  //     setDodgeStyle({});
-  //     chooseResponse("time");
-  //   }
-  // };
 
   // function สำหรับจุดพลุ
   const [confetti, setConfetti] = useState([]);
@@ -183,7 +168,49 @@ function App() {
     }
   };
 
+  // Login
+  const [showLogin, setShowLogin] = useState(false);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [loginError, setLoginError] = useState("");
 
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    localStorage.getItem("isLoggedIn") === "true"
+  );
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+
+    if (username === "pro" && password === "1234") {
+      localStorage.setItem("isLoggedIn", "true");
+
+      setIsLoggedIn(true);
+      setPhotoList(successPhotos);
+      setPhotoIndex(0);
+
+      setShowLogin(false);
+      setUsername("");
+      setPassword("");
+      setLoginError("");
+    } else {
+      // ❌ ไม่ต้องเปลี่ยนรูปเป็น defaultPhotos ตรงนี้
+      setLoginError("Username หรือ Password ไม่ถูกต้อง");
+    }
+  };
+
+  useEffect(() => {
+    if (localStorage.getItem("isLoggedIn") === "true") {
+      setPhotoList(successPhotos);
+    }
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("isLoggedIn");
+
+    setIsLoggedIn(false);
+    setPhotoList(defaultPhotos);
+    setPhotoIndex(0);
+  };
   
 
 
@@ -228,10 +255,70 @@ function App() {
       </div>
 
       {/* logo */}
-      <div className="floating-photo">
+      <div
+        className="floating-photo"
+        onClick={() => setShowLogin(true)}
+        style={{ cursor: "pointer" }}
+      >
         <img src="/images/zintear.JPG" alt="logo" />
         {/* <img src="/images/kid.jpg" alt="logo" /> */}
       </div>
+
+      {/* Login */}
+      {showLogin && (
+        <div className="login-overlay">
+          <div className="login-modal">
+            <button
+              className="login-close"
+              onClick={() => {
+                setShowLogin(false);
+                setLoginError("");
+              }}
+            >
+              ×
+            </button>
+
+            <h3>{isLoggedIn ? "เข้าสู่ระบบแล้ว" : "เข้าสู่ระบบ"}</h3>
+
+            {isLoggedIn ? (
+              <button
+                type="button"
+                className="login-submit"
+                onClick={handleLogout}
+              >
+                Logout
+              </button>
+            ) : (
+              <form onSubmit={handleLogin}>
+                <input
+                  type="text"
+                  placeholder="Username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  autoFocus
+                />
+
+                <input
+                  type="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+
+                {loginError && (
+                  <div className="login-error">
+                    {loginError}
+                  </div>
+                )}
+
+                <button type="submit" className="login-submit">
+                  Login
+                </button>
+              </form>
+            )}
+          </div>
+        </div>
+      )}
       
 
       {!started ? (
@@ -268,14 +355,14 @@ function App() {
                 <ArrowLeft size={20}/>
               </button>
 
-              <img src={photos[photoIndex]} alt="ความทรงจำ" key={photoIndex} />
+              <img src={photoList[photoIndex]} alt="ความทรงจำ" key={photoIndex} />
 
               <button className="photo-nav photo-nav-right" onClick={nextPhoto} aria-label="รูปถัดไป">
                 <ArrowRight size={20}/>
               </button>
 
               <div className="photo-dots">
-                {photos.map((_, i) => (
+                {photoList.map((_, i) => (
                   <span
                     key={i}
                     className={`dot-indicator ${i === photoIndex ? "active" : ""}`}
@@ -370,7 +457,7 @@ function App() {
                       <span className="maintenance-icon">🚧</span>
                       <p>ปุ่มนี้ปิดปรับปรุงชั่วคราว</p>
                       <p className="maintenance-sub">(ใจเราพร้อมนะ แต่ระบบยังไม่พร้อม 😅 ลองกดปุ่มข้าง ๆ แทนก่อนได้นะ)</p>
-                      <p className="maintenance-sub">*โปรดติดต่อแอดมินโปร</p>
+                      <p className="maintenance-sub">*โปรดติดต่อแอดมินโปร*</p>
                       <button className="maintenance-close" onClick={() => setShowMaintenance(false)}>
                         <X size={14}/> ปิด
                       </button>
