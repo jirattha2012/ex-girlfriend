@@ -16,14 +16,7 @@ const memories = [
 ];
 
 const photos = [
-  // "/images/paiting.jpg",
-  // "/images/mark_nha.jpg",
   "/images/button.JPG",
-  // "/images/button_2.jpg",
-  // "/images/couple_shoes.jpg",
-  // "/images/flowers.jpg",
-  // "/images/looking_on_the_sea.jpg",
-  // "/images/zin_in_flowers.jpg",
   "/images/a1.PNG",
   "/images/a2.PNG",
   "/images/a3.PNG",
@@ -35,6 +28,14 @@ const photos = [
   "/images/a9.PNG",
   "/images/a10.PNG",
   "/images/a11.PNG",
+
+  // "/images/paiting.jpg",
+  // "/images/couple_shoes.jpg",
+  // "/images/waiting_train.jpg",
+  // "/images/hbd.jpg",
+  // "/images/hbd2.jpg",
+  // "/images/mc.jpg",
+  // "/images/nippy.jpg",
 ];
 
 function App() {
@@ -334,7 +335,11 @@ function App() {
                       onMouseEnter={dodgeCount < 9 ? handleTimeClick : undefined}
                       onClick={handleTimeClick}
                     >
-                      ขอเวลาคิดดูก่อน <span>🤍</span>
+                      {dodgeCount >= 9
+                        ? "แน่ใจแล้วใช่ไหม?"
+                        : dodgeCount >= 8
+                          ? "ถามรอบสุดท้ายแล้วนะ"
+                          : "ขอเวลาคิดดูก่อน"} <span>🤍</span>
                     </button>
                     
                     {/* placeholder แทนที่ตอนปุ่มจริงหลุดออกจาก flow */}
