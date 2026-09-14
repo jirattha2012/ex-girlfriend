@@ -16,9 +16,26 @@ const memories = [
 ];
 
 const photos = [
-  "/images/paiting.jpg",
-  "/images/mark_nha.jpg",
-  "/images/button.JPG",
+  // "/images/paiting.jpg",
+  // "/images/mark_nha.jpg",
+  "/images/button.jpg",
+  // "/images/zintear.jpg",
+  // "/images/button_2.jpg",
+  // "/images/couple_shoes.jpg",
+  // "/images/flowers.jpg",
+  // "/images/looking_on_the_sea.jpg",
+  // "/images/zin_in_flowers.jpg",
+  "/images/a1.PNG",
+  "/images/a2.PNG",
+  "/images/a3.PNG",
+  "/images/a4.PNG",
+  "/images/a5.PNG",
+  "/images/a6.PNG",
+  "/images/a7.PNG",
+  "/images/a8.PNG",
+  "/images/a9.PNG",
+  "/images/a10.PNG",
+  "/images/a11.PNG",
 ];
 
 function App() {
@@ -48,31 +65,31 @@ function App() {
   const [dodgeCount, setDodgeCount] = useState(0);
   const [dodgeStyle, setDodgeStyle] = useState({});
 
-  const handleTimeClick = (e) => {
-    if (dodgeCount < MAX_DODGE) {
-      const btnWidth = 200;
-      const btnHeight = 55;
-      const padding = 20;
+  // const handleTimeClick = (e) => {
+  //   if (dodgeCount < MAX_DODGE) {
+  //     const btnWidth = 200;
+  //     const btnHeight = 55;
+  //     const padding = 20;
 
-      const maxX = window.innerWidth - btnWidth - padding;
-      const maxY = window.innerHeight - btnHeight - padding;
+  //     const maxX = window.innerWidth - btnWidth - padding;
+  //     const maxY = window.innerHeight - btnHeight - padding;
 
-      const randomX = padding + Math.random() * maxX;
-      const randomY = padding + Math.random() * maxY;
-      const randomRotate = (Math.random() - 0.5) * 40;
+  //     const randomX = padding + Math.random() * maxX;
+  //     const randomY = padding + Math.random() * maxY;
+  //     const randomRotate = (Math.random() - 0.5) * 40;
 
-      setDodgeStyle({
-        position: "fixed",
-        left: `${randomX}px`,
-        top: `${randomY}px`,
-        transform: `rotate(${randomRotate}deg)`,
-      });
-      setDodgeCount(c => c + 1);
-    } else {
-      setDodgeStyle({});
-      chooseResponse("time");
-    }
-  };
+  //     setDodgeStyle({
+  //       position: "fixed",
+  //       left: `${randomX}px`,
+  //       top: `${randomY}px`,
+  //       transform: `rotate(${randomRotate}deg)`,
+  //     });
+  //     setDodgeCount(c => c + 1);
+  //   } else {
+  //     setDodgeStyle({});
+  //     chooseResponse("time");
+  //   }
+  // };
 
   // function สำหรับจุดพลุ
   const [confetti, setConfetti] = useState([]);
@@ -95,6 +112,68 @@ function App() {
   const handleTalkClick = () => {
     fireConfetti();
     chooseResponse("talk");
+  };
+
+  // ฟังก์ชันคำนวณว่าสีพื้นหลังนี้ควรใช้ตัวอักษรสีอะไรถึงจะอ่านง่าย
+  const getContrastColor = (bgColor) => {
+    const match = bgColor.match(/\d+/g);
+    if (!match) return "#352d2a"; // fallback สีเข้มเริ่มต้น
+
+    const [r, g, b] = match.map(Number);
+    // สูตรคำนวณความสว่างแบบ perceived luminance
+    const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+
+    return luminance > 0.55 ? "#352d2a" : "#fdf9f4"; // สว่าง→ตัวหนังสือเข้ม, มืด→ตัวหนังสือสว่าง
+  };
+
+  const getBackgroundAt = (x, y) => {
+    const el = document.elementFromPoint(x, y);
+    if (!el) return "rgb(250,247,242)"; // fallback สีพื้นหลังเว็บโดยรวม
+
+    let node = el;
+    while (node) {
+      const bg = window.getComputedStyle(node).backgroundColor;
+      // ข้ามถ้าพื้นหลังโปร่งใส ไล่หา parent ที่มีสีจริงต่อ
+      if (bg && bg !== "rgba(0, 0, 0, 0)" && bg !== "transparent") {
+        return bg;
+      }
+      node = node.parentElement;
+    }
+    return "rgb(250,247,242)";
+  };
+
+  const handleTimeClick = () => {
+    if (dodgeCount < MAX_DODGE) {
+      const btnWidth = 200;
+      const btnHeight = 55;
+      const padding = 20;
+
+      const maxX = window.innerWidth - btnWidth - padding;
+      const maxY = window.innerHeight - btnHeight - padding;
+
+      const randomX = padding + Math.random() * maxX;
+      const randomY = padding + Math.random() * maxY;
+      const randomRotate = (Math.random() - 0.5) * 40;
+
+      // เช็คสีพื้นหลังตรงกึ่งกลางตำแหน่งใหม่ที่ปุ่มจะไปอยู่
+      const centerX = randomX + btnWidth / 2;
+      const centerY = randomY + btnHeight / 2;
+      const bgColor = getBackgroundAt(centerX, centerY);
+      const textColor = getContrastColor(bgColor);
+
+      setDodgeStyle({
+        position: "fixed",
+        left: `${randomX}px`,
+        top: `${randomY}px`,
+        transform: `rotate(${randomRotate}deg)`,
+        color: textColor,
+        borderColor: textColor,
+      });
+      setDodgeCount(c => c + 1);
+    } else {
+      setDodgeStyle({});
+      chooseResponse("time");
+    }
   };
 
 
@@ -233,12 +312,10 @@ function App() {
                 <div className="response-area">
                   <p className="question">แต่ถ้าเธออยากบอกอะไรกับเรา…</p>
                   <div className="response-buttons">
+                    {/* <button className="primary" onClick={() => chooseResponse("talk")}> */}
                     {/* <button className="primary" onClick={() => setShowMaintenance(true)}> */}
-                    {/* <button className="primary" onClick={() => chooseResponse("talk")}>
-                      ลองคุยกันอีกครั้งนะ <Heart size={17}/>
-                    </button> */}
                     <button className="primary" onClick={handleTalkClick}>
-                      ลองคุยกันอีกครั้งนะ <Heart size={17}/>
+                      ลองคุยกันอีกครั้งนะ <Heart size={17}/>                    
                     </button>
                     
                     <button
@@ -249,6 +326,11 @@ function App() {
                     >
                       ขอเวลาคิดดูก่อน <span>🤍</span>
                     </button>
+                    
+                    {/* placeholder แทนที่ตอนปุ่มจริงหลุดออกจาก flow */}
+                    {dodgeCount > 0 && dodgeCount < MAX_DODGE && (
+                      <span className="secondary-placeholder" aria-hidden="true"></span>
+                    )}
 
                   </div>
 
@@ -257,6 +339,7 @@ function App() {
                       <span className="maintenance-icon">🚧</span>
                       <p>ปุ่มนี้ปิดปรับปรุงชั่วคราว</p>
                       <p className="maintenance-sub">(ใจเราพร้อมนะ แต่ระบบยังไม่พร้อม 😅 ลองกดปุ่มข้าง ๆ แทนก่อนได้นะ)</p>
+                      <p className="maintenance-sub">*โปรดติดต่อแอดมินโปร</p>
                       <button className="maintenance-close" onClick={() => setShowMaintenance(false)}>
                         <X size={14}/> ปิด
                       </button>
@@ -271,6 +354,7 @@ function App() {
                     <>
                       <h3>ขอบคุณที่เปิดประตูให้เราอีกครั้ง</h3>
                       <p>เราไม่อยากรีบกลับไปเป็นเหมือนเดิม<br/>แต่อยากค่อย ๆ ทำให้เธอรู้สึกดีและสบายใจอีกครั้ง</p>
+                      <p style={{ fontSize: "8px" }}> *cap หน้าจอส่งมาด้วยนะ* </p>
                     </>
                   ) : (
                     <>
