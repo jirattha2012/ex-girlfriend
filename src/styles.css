@@ -40,8 +40,10 @@ em { font-style:normal; color:#b17878; }
 .letter p { font-family:"Noto Serif Thai",serif; font-size:18px; line-height:2; color:#665953; }
 .letter strong { color:#8e5e60; font-weight:600; }
 .memories { max-width:950px; }
-.photo-box { height:420px; border-radius:30px; border:1px dashed #d6c8be; background:#f5efe9; display:flex; flex-direction:column; align-items:center; justify-content:center; color:#a3938a; gap:10px; overflow:hidden; margin-bottom:70px; }
+
+.photo-box { height:490px; border-radius:30px; border:1px dashed #d6c8be; background:#f5efe9; display:flex; flex-direction:column; align-items:center; justify-content:center; color:#a3938a; gap:10px; overflow:hidden; margin-bottom:70px; }
 .photo-box img { width:100%; height:100%; object-fit:cover; }
+
 .upload { color:#705b54; text-decoration:underline; cursor:pointer; font-size:13px; }
 .upload input { display:none; }
 .timeline { position:relative; }
@@ -90,3 +92,183 @@ em { font-style:normal; color:#b17878; }
   .final-card { padding:48px 25px; border-radius:28px; }
   .response-buttons .primary,.response-buttons .secondary { width:100%; justify-content:center; }
 }
+
+
+/* logo cat */
+.floating-photo {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 40;
+  width: 90px;
+  height: 90px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+  border: 2px solid rgba(255,255,255,0.6);
+  transition: transform 0.3s ease;
+}
+
+.floating-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.floating-photo:hover {
+  transform: scale(1.08);
+}
+
+@media (max-width: 480px) {
+  .floating-photo {
+    width: 70px;
+    height: 70px;
+    bottom: 14px;
+    right: 14px;
+  }
+}
+
+/* signature */
+.signature {
+  position: fixed;
+  bottom: 22px;
+  right: 122px;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  background: rgba(250,247,242,.8);
+  backdrop-filter: blur(10px);
+  padding: 10px 16px;
+  border-radius: 18px;
+  border: 1px solid #e5dcd4;
+  box-shadow: 0 8px 24px rgba(70,52,43,.08);
+}
+
+.sig-ig {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+}
+
+.ig-logo {
+  font-size: 18px;
+  color: #E4405F;
+}
+
+.rainbow-text {
+  background: linear-gradient(
+    90deg,
+    #ff0000,
+    #ff8c00,
+    #ffd700,
+    #00c853,
+    #00b0ff,
+    #7c4dff,
+    #ff00a8
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: rainbow 3s linear infinite;
+}
+
+@keyframes rainbow {
+  to {
+    background-position: 200% center;
+  }
+}
+
+.sig-quote {
+  font-family: "Noto Serif Thai", serif;
+  font-style: italic;
+  font-size: 12px;
+  color: #705b54;
+  white-space: nowrap;
+}
+
+@media (max-width: 480px) {
+  .signature {
+    right: 14px;
+    bottom: 90px;
+    padding: 8px 13px;
+  }
+  .sig-quote { font-size: 11px; }
+}
+
+/* slide photoes */
+.photo-box {
+  position: relative;
+  overflow: hidden;
+}
+
+.photo-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  animation: fadeSwitch 0.4s ease;
+}
+
+@keyframes fadeSwitch {
+  from { opacity: 0; transform: scale(1.02); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.photo-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+  transition: background 0.2s ease, transform 0.2s ease;
+  z-index: 5;
+}
+
+.photo-nav:hover {
+  background: #fff;
+  transform: translateY(-50%) scale(1.08);
+}
+
+.photo-nav-left { left: 12px; }
+.photo-nav-right { right: 12px; }
+
+.photo-dots {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+  z-index: 5;
+}
+
+.dot-indicator {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.5);
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.dot-indicator.active {
+  background: #fff;
+  transform: scale(1.3);
+}
+
+
+
+

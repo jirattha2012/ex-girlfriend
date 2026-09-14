@@ -1,10 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
+import "./styles.css";
 import {
   ArrowDown, ArrowLeft, ArrowRight, Check, Heart, ImagePlus,
   Lock, Music2, Pause, Play, RotateCcw, Sparkles, X
 } from "lucide-react";
-import "./styles.css";
+import { FaInstagram } from "react-icons/fa";
+
 
 const memories = [
   { date: "วันแรกที่ได้คุยกัน", title: "จากคนแปลกหน้า → คนที่เราอยากรู้จักมากขึ้น", text: "ตอนนั้นเราอาจไม่รู้เลยว่าการคุยกันธรรมดา ๆ จะกลายเป็นความทรงจำที่สำคัญขนาดนี้" },
@@ -13,11 +15,18 @@ const memories = [
   { date: "วันนี้", title: "เราไม่ได้ขอให้ทุกอย่างกลับไปเหมือนเดิม", text: "ถ้ามีโอกาส เราอยากค่อย ๆ รู้จักเธอใหม่ และพิสูจน์ด้วยการกระทำมากกว่าคำสัญญา" }
 ];
 
+const photos = [
+  "/images/paiting.jpg",
+  "/images/mark_nha.jpg",
+  "/images/button.JPG",
+];
+
 function App() {
   const [started, setStarted] = useState(false);
   const [musicOn, setMusicOn] = useState(false);
   const [response, setResponse] = useState(null);
-  const [photo, setPhoto] = useState(null);
+  // const [photo, setPhoto] = useState(null);
+  const [photoIndex, setPhotoIndex] = useState(0);
   const audioRef = useRef(null);
 
   useEffect(() => {
@@ -28,15 +37,34 @@ function App() {
 
   const chooseResponse = (value) => setResponse(value);
 
+  const prevPhoto = () => setPhotoIndex(i => (i === 0 ? photos.length - 1 : i - 1));
+  const nextPhoto = () => setPhotoIndex(i => (i === photos.length - 1 ? 0 : i + 1));
+
+
   return (
     <div className="site">
-      <audio ref={audioRef} loop src="/song.mp3" />
+      <audio ref={audioRef} loop src="/midnight_sun.mp3" />
 
       <div className="grain" />
       <button className="music" onClick={() => setMusicOn(v => !v)} aria-label="เพลง">
         {musicOn ? <Pause size={17}/> : <Music2 size={17}/>}
         <span>{musicOn ? "กำลังเล่น" : "เปิดเพลง"}</span>
       </button>
+
+      {/* logo */}
+      <div className="floating-photo">
+        <img src="/images/zintear.JPG" alt="รูปประกอบ" />
+      </div>
+      
+      {/* signatures */}
+      <div className="signature">
+        <span className="sig-ig">
+          <FaInstagram className="ig-logo" />
+          <span className="rainbow-text">IG: j_r_tha</span>
+        </span>
+        
+        <span className="sig-quote">Khon Thai pen arai gap khon kao?</span>
+      </div>
 
       {!started ? (
         <section className="hero landing">
@@ -68,18 +96,27 @@ function App() {
             <div className="eyebrow">02 — สิ่งที่เรายังจำได้</div>
             <h2>บางความทรงจำ<br/><em>ยังอยู่ตรงนี้เสมอ</em></h2>
             <div className="photo-box">
-              {photo ? <img src={photo} alt="ความทรงจำ" /> : (
-                <>
-                  <ImagePlus size={30}/>
-                  <span>ใส่รูปของเราได้ที่นี่</span>
-                  <label className="upload">เลือกจากเครื่อง
-                    <input type="file" accept="image/*" onChange={e => {
-                      const f=e.target.files?.[0]; if(f) setPhoto(URL.createObjectURL(f));
-                    }}/>
-                  </label>
-                </>
-              )}
+              <button className="photo-nav photo-nav-left" onClick={prevPhoto} aria-label="รูปก่อนหน้า">
+                <ArrowLeft size={20}/>
+              </button>
+
+              <img src={photos[photoIndex]} alt="ความทรงจำ" key={photoIndex} />
+
+              <button className="photo-nav photo-nav-right" onClick={nextPhoto} aria-label="รูปถัดไป">
+                <ArrowRight size={20}/>
+              </button>
+
+              <div className="photo-dots">
+                {photos.map((_, i) => (
+                  <span
+                    key={i}
+                    className={`dot-indicator ${i === photoIndex ? "active" : ""}`}
+                    onClick={() => setPhotoIndex(i)}
+                  />
+                ))}
+              </div>
             </div>
+
             <div className="timeline">
               {memories.map((m, i) => (
                 <article className="memory" key={m.date}>
@@ -99,10 +136,10 @@ function App() {
             <h2>เราไม่อยากกลับไป<br/><em>เป็นเหมือนเดิม</em></h2>
             <p className="big-copy">เราอยากกลับไปเริ่มต้นใหม่<br/>ในแบบที่ดีกว่าเดิม</p>
             <div className="promise-grid">
-              <div><Check size={18}/><span>ฟังให้มากกว่าที่พูด</span></div>
-              <div><Check size={18}/><span>ไม่ปล่อยให้ปัญหาค้างอยู่คนเดียว</span></div>
-              <div><Check size={18}/><span>พิสูจน์ด้วยการกระทำ</span></div>
-              <div><Check size={18}/><span>เคารพความรู้สึกและพื้นที่ของเธอ</span></div>
+              <div><Check size={18}/><span> <s>ฟังให้มากกว่าที่พูด</s> เลือกที่จะพูดถึงปัญหา </span></div>
+              <div><Check size={18}/><span> ไม่ปล่อยให้ปัญหาค้างอยู่คนเดียว </span></div>
+              <div><Check size={18}/><span> พิสูจน์ด้วยการกระทำ </span></div>
+              <div><Check size={18}/><span> เคารพความรู้สึกและพื้นที่ของเธอ </span></div>
             </div>
           </section>
 
