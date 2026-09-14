@@ -5,7 +5,7 @@ import {
   ArrowDown, ArrowLeft, ArrowRight, Check, Heart, ImagePlus,
   Lock, Music2, Pause, Play, RotateCcw, Sparkles, X
 } from "lucide-react";
-// import { FaInstagram } from "react-icons/fad";
+import { FaInstagram } from "react-icons/fa";
 
 
 const memories = [
@@ -220,7 +220,7 @@ function App() {
       {/* signatures */}
       <div className="signature">
         <span className="sig-ig">
-          {/* <FaInstagram className="ig-logo" /> */}
+          <FaInstagram className="ig-logo" />
           <span className="rainbow-text">IG: j_r_tha</span>
         </span>
         
