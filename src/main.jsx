@@ -209,7 +209,7 @@ function App() {
 
       {/* logo */}
       <div className="floating-photo">
-        <img src="/images/zintear.jpg" alt="logo" />
+        <img src="/images/zintear.JPG" alt="logo" />
         {/* <img src="/images/kid.jpg" alt="logo" /> */}
       </div>
       
