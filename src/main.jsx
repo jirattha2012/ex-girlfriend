@@ -40,6 +40,40 @@ function App() {
   const prevPhoto = () => setPhotoIndex(i => (i === 0 ? photos.length - 1 : i - 1));
   const nextPhoto = () => setPhotoIndex(i => (i === photos.length - 1 ? 0 : i + 1));
 
+  // false = ปิดปรับปรุงอยู่
+  const [showMaintenance, setShowMaintenance] = useState(false); 
+
+  // ย้ายตำแหน่ง button == time 
+  const MAX_DODGE = 9;
+  const [dodgeCount, setDodgeCount] = useState(0);
+  const [dodgeStyle, setDodgeStyle] = useState({});
+
+  const handleTimeClick = (e) => {
+    if (dodgeCount < MAX_DODGE) {
+      const btnWidth = 200;
+      const btnHeight = 55;
+      const padding = 20;
+
+      const maxX = window.innerWidth - btnWidth - padding;
+      const maxY = window.innerHeight - btnHeight - padding;
+
+      const randomX = padding + Math.random() * maxX;
+      const randomY = padding + Math.random() * maxY;
+      const randomRotate = (Math.random() - 0.5) * 40;
+
+      setDodgeStyle({
+        position: "fixed",
+        left: `${randomX}px`,
+        top: `${randomY}px`,
+        transform: `rotate(${randomRotate}deg)`,
+      });
+      setDodgeCount(c => c + 1);
+    } else {
+      setDodgeStyle({});
+      chooseResponse("time");
+    }
+  };
+
 
   return (
     <div className="site">
@@ -155,10 +189,34 @@ function App() {
                 <div className="response-area">
                   <p className="question">แต่ถ้าเธออยากบอกอะไรกับเรา…</p>
                   <div className="response-buttons">
-                    <button className="primary" onClick={() => chooseResponse("talk")}>ลองคุยกันอีกครั้งนะ <Heart size={17}/></button>
-                    <button className="secondary" onClick={() => chooseResponse("time")}>ขอเวลาคิดดูก่อน <span>🤍</span></button>
+                    {/* <button className="primary" onClick={() => setShowMaintenance(true)}> */}
+                    <button className="primary" onClick={() => chooseResponse("talk")}>
+                      ลองคุยกันอีกครั้งนะ <Heart size={17}/>
+                    </button>
+                    
+                    <button
+                      className={`secondary ${dodgeCount > 0 && dodgeCount < 9 ? "dodging" : ""}`}
+                      style={dodgeStyle}
+                      onMouseEnter={dodgeCount < 9 ? handleTimeClick : undefined}
+                      onClick={handleTimeClick}
+                    >
+                      ขอเวลาคิดดูก่อน <span>🤍</span>
+                    </button>
+
                   </div>
+
+                  {showMaintenance && (
+                    <div className="maintenance-popup">
+                      <span className="maintenance-icon">🚧</span>
+                      <p>ปุ่มนี้ปิดปรับปรุงชั่วคราว</p>
+                      <p className="maintenance-sub">(ใจเราพร้อมนะ แต่ระบบยังไม่พร้อม 😅 ลองกดปุ่มข้าง ๆ แทนก่อนได้นะ)</p>
+                      <button className="maintenance-close" onClick={() => setShowMaintenance(false)}>
+                        <X size={14}/> ปิด
+                      </button>
+                    </div>
+                  )}
                 </div>
+                
               ) : (
                 <div className="response-result">
                   <Sparkles size={25}/>

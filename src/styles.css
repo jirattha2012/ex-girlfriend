@@ -269,6 +269,59 @@ em { font-style:normal; color:#b17878; }
   transform: scale(1.3);
 }
 
+/* talk */
+.maintenance-popup {
+  margin-top: 18px;
+  background: rgba(255,255,255,0.08);
+  border: 1px dashed rgba(255,255,255,0.3);
+  border-radius: 18px;
+  padding: 20px;
+  text-align: center;
+  animation: rise 0.4s cubic-bezier(.2,.8,.2,1) both;
+}
+
+.maintenance-icon {
+  font-size: 26px;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.maintenance-popup p {
+  color: #f0e6e0;
+  font-size: 14px;
+  margin: 4px 0;
+}
+
+.maintenance-sub {
+  color: #c9bab2 !important;
+  font-size: 12px !important;
+}
+
+.maintenance-close {
+  margin-top: 12px;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.25);
+  color: #f0e6e0;
+  border-radius: 999px;
+  padding: 7px 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+}
+
+.maintenance-close:hover {
+  background: rgba(255,255,255,0.08);
+}
 
 
+/* time */
+.response-buttons .secondary {
+  transition: transform 0.25s cubic-bezier(.2,.8,.2,1), top 0.25s cubic-bezier(.2,.8,.2,1), left 0.25s cubic-bezier(.2,.8,.2,1);
+}
+
+.response-buttons .secondary.dodging {
+  position: fixed;
+  z-index: 999;
+}
 
