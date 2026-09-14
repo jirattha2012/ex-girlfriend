@@ -19,7 +19,6 @@ const photos = [
   // "/images/paiting.jpg",
   // "/images/mark_nha.jpg",
   "/images/button.jpg",
-  // "/images/zintear.jpg",
   // "/images/button_2.jpg",
   // "/images/couple_shoes.jpg",
   // "/images/flowers.jpg",
@@ -210,7 +209,8 @@ function App() {
 
       {/* logo */}
       <div className="floating-photo">
-        <img src="/images/zintear.JPG" alt="รูปประกอบ" />
+        <img src="/images/zintear.jpg" alt="logo" />
+        {/* <img src="/images/kid.jpg" alt="logo" /> */}
       </div>
       
       {/* signatures */}
