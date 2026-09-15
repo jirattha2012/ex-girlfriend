@@ -418,7 +418,8 @@ function App() {
                       onClick={() =>
                         isLoggedIn
                           ? handleTalkClick()
-                          : setShowMaintenance(true)
+                          : handleTalkClick()
+                          // : setShowMaintenance(true)  // ปิดปรับปรุง
                       }
                     >
                       ลองคุยกันอีกครั้งนะ <Heart size={17}/>                    
